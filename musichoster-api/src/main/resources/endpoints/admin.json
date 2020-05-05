@@ -1,0 +1,349 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User Administration API",
+    "version": "1.0.0",
+    "description": "## API of User Administration Services\n\nThis specification describes the endpoints, request/response model of the User Administration API. This API provides REST resources to manage musics of Music Hoster application."
+  },
+    "host": "musichoster.io",
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "basePath": "/api/v1/musics",
+    "tags": [
+      {
+        "name": "API#003 Musics",
+        "description": "All operations marked with 'API#003 Musics' are relevant to user administration use case"
+      }
+    ],
+    "paths": {
+      "/musics/{id}": {
+        "get": {
+          "operationId": "getMusic",
+          "tags": [
+            "API#003 Musics"
+          ],
+          "security": [
+            {
+              "Authorization": [
+              ]
+            }
+          ],
+          "summary": "Music Administration - Get an existing Music",
+          "description": "API to get an existing music of Music Hoster application\n",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/MusicId"
+            },
+            {
+              "$ref": "#/parameters/ClientId"
+            },
+            {
+              "$ref": "#/parameters/Authorization"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Fetched music details",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/MusicDetailsResponse"
+              }
+            },
+            "400": {
+              "description": "BAD REQUEST - server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, mandatory elements are missing)",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "401": {
+              "description": "UNAUTHORIZED - user has provided wrong credentials",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "403": {
+              "description": "FORBIDDEN - request has not been applied because client application has no permission to perform action",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "404": {
+              "description": "NOT FOUND - Music (resource) does not exist",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "500": {
+              "description": "INTERNAL SERVER ERROR - server encountered an unexpected condition that prevented it from fulfilling the request.",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "operationId": "updateMusic",
+          "tags": [
+            "API#003 Musics"
+          ],
+          "security": [
+            {
+              "Authorization": [
+              ]
+            }
+          ],
+          "summary": "Music Administration - Update an existing Music",
+          "description": "API to update an existing music in Music Hoster application\n",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "$ref": "#/parameters/MusicId"
+            },
+            {
+              "$ref": "#/parameters/ClientId"
+            },
+            {
+              "$ref": "#/parameters/Authorization"
+            },
+            {
+              "in": "body",
+              "name": "UpdateMusicRequest",
+              "description": "Request containing modified music details",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UpdateMusicRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK - Music has been updated successfully",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "400": {
+              "description": "BAD REQUEST - server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, mandatory elements are missing)",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "401": {
+              "description": "UNAUTHORIZED - user has provided wrong credentials",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "403": {
+              "description": "FORBIDDEN - request has not been applied because client application has no permission to perform action",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "404": {
+              "description": "NOT FOUND -  Music (resource) does not exist",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            },
+            "422": {
+              "description": "UNPROCESSABLE ENTITY - request was well-formed but server unable to process due to semantic errors",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            },
+            "500": {
+              "description": "INTERNAL SERVER ERROR - server encountered an unexpected condition that prevented it from fulfilling the request.",
+              "headers": {
+                "request-id": {
+                  "type": "string",
+                  "description": "Used as correlation id while tracing for the request in the backend"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "ClientId": {
+        "name": "client-id",
+        "type": "string",
+        "in": "header",
+        "required": true,
+        "description": "Mandatory request header about the caller of this API. Only an authorized clients are allowed to this API."
+      },
+      "Authorization": {
+        "name": "authorization",
+        "type": "string",
+        "in": "header",
+        "required": true,
+        "description": "Mandatory user credentials in bearer http authentication scheme format. Refer to the #/securityDefinitions for more information on this header."
+      },
+      "MusicId": {
+        "name": "id",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "description": "Unique identifier of Music in a standard UUID format"
+      }
+    },
+    "definitions": {
+      "MusicDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "music":{
+            "type":"string",
+            "description":"This is music in Base64 format"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier of the user in a standard UUID format"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the music"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the music"
+          },
+          "status": {
+            "type": "string",
+            "description": "Music Active Status"
+          }
+        },
+        "required": [
+          "music",
+          "id",
+          "name",
+          "description",
+          "status"
+        ],
+        "example": {
+          "music":"sd-dcsc-vac",
+          "id": "7d174a25-ba31-45a8-85b4-b06ffc9d5f8f",
+          "name": "my_music",
+          "description": "This music was taken at 27 aug",
+          "status": "Music Active Status"
+        }
+      },
+      "UpdateMusicRequest": {
+        "type": "object",
+
+        "properties": {
+          "music":{
+            "type":"string",
+            "description":"This is music in Base64 format"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the music"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the music"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the music"
+          }
+        },
+        "example": {
+          "music":"sdfv-sfdv-sf",
+          "name": "my_music",
+          "description": "New description",
+          "status": "Active"
+        }
+      },
+      "UpdateMusicResponse":{
+        "type": "object",
+        "properties": {
+          "id":{
+            "type":"integer",
+            "description":"id of the music"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the music"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Application specific standard error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message stating the reason"
+          },
+          "root_cause": {
+            "type": "string",
+            "description": "Root cause of the Error"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "example": {
+          "code": "USR-001",
+          "message": "Email address already exist"
+        }
+      }
+    }
+  }
